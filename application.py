@@ -1,10 +1,8 @@
-from flask import Flask
-app = Flask(__name__)
+from server import *
+# aqui se importarian los modelos
 
-@app.route('/')
-def hello():
-    return 'Hello World!'
 
-if __name__ == '__main__':
-  app.run(host='127.0.0.1', port=85, debug=True)
+
+if __name__ == "__main__":
+	app.run(port=config["PORTAPI"], debug=config['DEBUG'])
  
