@@ -15,7 +15,7 @@ db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
 # aqui se importaria los modelos de la base de datos
-
+from models.userModel import *
 
 # creando todas las tablas en la base de datos
 db.create_all()
