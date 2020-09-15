@@ -20,7 +20,7 @@ os.environ["DEBUG"]="FALSE"
 #probando mysql en mi local
 os.environ["BD"]          = 'mysql'
 os.environ["HOST"]        = 'localhost'
-os.environ["DATABASE"]    = 'dtuser'
+os.environ["DATABASE"]    = 'dbuser'
 os.environ["PORTBD"]      = '3306'
 os.environ["USER"]        = 'root'
 os.environ["PASSWORD"]    = 'root'

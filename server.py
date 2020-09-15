@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 api = Api(
         app,
-        title='Proyecto Final Backend',
+        title='Proyecto API CRUD Users',
         version='1.0',
         description='aplicacion CRUD',
     )
