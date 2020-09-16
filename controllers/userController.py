@@ -85,9 +85,7 @@ class UserController(Resource):
         else:
             return {"error":f"el usuario con id {id}, no se encuentra en la base de datos"}
         
-    
-    
-    # ACTUALIZAR un usuario por su id validando los campos ingresados        
+    # eliminar un usuario por su id         
     def delete(self,id):
         if validarIdUser(id):
             user = User.query.filter_by(id=id).first()
@@ -96,7 +94,171 @@ class UserController(Resource):
             return{"success":f"usuario de id {id}, eliminado exitosamente"}
         else:
             return {"error:"f"el usuario con id {id}, no se encuentra en la base de datos"}
+
+class UserPostController(Resource):
+    
+    def get(self):
+        users = User.query.all()
+        return userSchema.dump(users)
+
+    def post(self):
+        data = request.get_json()
+        camposColumnas = ["nombre","apellido","password","email","movil","fechaNacimiento","foto","description","estado_id","sede_id","especialidad_id"]
+        camposIguales=[]
+        camposFaltantes=[]
+        for campo in camposColumnas:
+            if campo in data.keys():
+                camposIguales.append(campo)
+            else:
+                camposFaltantes.append(campo)
+                fotoDefault =""
+                if len(camposColumnas) == len(camposIguales):
+                    if validarCaracteresAlfabeticos(data["nombre"]):
+                        nombre = data["nombre"]
+                else:
+                    return {"error":"ingrese el nombre correctamente"}
+
+                if validarCaracteresAlfabeticos(data["apellido"]):
+                    apellido = data["apellido"]
+                else:
+                    return {"error":"ingrese el apellido correctamente"}
+
+                if validarCorreo(data["email"]):
+                    email = data["email"]
+                else:
+                    return {"error":"ingrese el email correctamente"}
+                
+                if validarMovil(data["movil"]).get("valor"):
+                    movil = data["movil"]
+                else:
+                    mensaje=validarMovil(data["movil"]).get("mensaje")
+                    return {"error":""+mensaje}
+
+                try:
+                    date_time_obj = datetime.datetime.strptime(data['fechaNacimiento'], '%Y-%m-%d')
+                except Exception as ex:
+                    return {"error":str(ex)}
+                
+                if validarIdEstado(data['estado_id']):
+                    estado_id= data['estado_id']
+                else:
+                    return {"error":"el estado no se encuentra en la base de datos"}
+
+                if validarIdSede(data['sede_id']):
+                    sede_id = data['sede_id']
+                else:
+                    return {"error":"la sede no se encuentra en la base de datos"}
+
+                if validarIdEspecialidad(data['especialidad_id']):
+                    especialidad_id = data['especialidad_id']
+                else:
+                    return {"error":"la especialidad no se encuentra en la base de datos"}
+            
+            new_user = User(
+
+                    nombre=nombre,
+                    apellido=apellido,
+                    password = data['password'],
+                    email = email,
+                    movil = movil,
+                    fechaNacimiento = date_time_obj,
+                    foto = data['foto'] if len(data['foto'])!=0 else fotoDefault,
+                    description = data['description'],
+                    estado_id = estado_id,
+                    sede_id = sede_id,
+                    especialidad_id = especialidad_id
+
+                    )
+            db.session.add(new_user)
+            db.session.commit()
+            return {"success":"usuario creado con exito","user":str(userSchema.dump(new_user))}
+        else:
+            return {"error": "falta ingresar los siguientes campos obligatorios: " + str(camposFaltantes)}
+
+class UserOrderNameOrLastNameController(Resource):
+  # LISTAR todos los usuarios por orden de apellido o nombre
+    
+    def get(self, nameOrLastName):
+        if nameOrLastName == 'apellido' or nameOrLastName == 'nombre':
+            users=''
+            if nameOrLastName == 'apellido':
+                users = User.query.order_by(User.apellido).all()
+            if nameOrLastName == 'nombre':
+                users = User.query.order_by(User.nombre).all()
+
+            return usersSchema.dump(users)
+        else:
+            return {"error":"la opción ingresada es incorrecta- pruebe con: 'nombre' o 'apellido'"}
+
+class UserListSpecializationController(Resource):
+  # LISTAR todos los usuarios por su especialidad
+    
+    def get(self):
+        data = request.get_json()
+        idEspecializacion=data["idEspecialidad"]
+        if validarIdEspecialidad(idEspecializacion):
+            users= User.query.filter_by(especialidad_id=idEspecializacion).all()
+            return usersSchema.dump(users)
+        else:
+            return {'error':'especialidad enviada no se encuentra en la base de datos'},400
+
+class UserSearchController(Resource):
+  # BUSCAR todos los usuarios ingresando algunas letras de su nombre
+  
+    def get(self, nombre):
+        if validarCaracteresAlfabeticos(nombre):
+            search =f'%{nombre}%'
+            users = User.query.filter(User.nombre.like(search)).all()
+            if len(users)!=0:
+                return usersSchema.dump(users)
+            else:
+                return  {'error':f'no hay usuarios que contengan la cadena: {nombre}'},400
+        else:
+            return {'error':'la cadena debe contener solo letras'},400
+class UserStateController(Resource):
+  # LISTAR todos los usuarios por su estado
+
+    def get(self):
+        data = request.get_json()
+        idEstado=data["idEstado"]
+
+        if validarIdEstado(idEstado):
+            if idEstado:
+                users= User.query.filter_by(estado_id=idEstado).all()
+            else:
+                return {'error':'estado enviado no se encuentra en la base de datos'},400
+            return usersSchema.dump(users)
+        else:
+            return {'error':'estado enviado no se encuentra en la base de datos'},400        
+
+    def put(self):
+        data = request.get_json()
+
+        if validarIdUser(data['id']) and validarIdEstado(data['idEstado']):
+            user = User.query.filter_by(id=data['id']).first()
+            dic_user=userSchema.dump(user)
+            if "idEstado" in data:
+                user.estado_id = data['idEstado']
+                if dic_user["estado_id"] == 1 and  data['idEstado']>1:
+                    user.last_connection=datetime.datetime.now()
+            else:
+                return {'error':'nombre del campo incorrecto'},400
+
+            db.session.commit()
+            user = User.query.filter_by(id=data['id']).first()
+            return userSchema.dump(user)
+        else:
+            return {'error':f'usuario {data["id"]} o estado {data["idEstado"]}, no se encuentra en la base de datos'},400
+
+class UserLastConnectionController(Resource):
+  # MOSTRAR la ultima conexion activa
+  
+    def get(self):
         
+        data = request.get_json()
+        if validarIdUser(data['idUser']):
+            user = User.query.filter_by(id=data['idUser']).first()
 
-
- 
+            return userSchema.dump(user)
+        else:
+            return {'error':'usuario no encontrado en la base de datos'},400
