@@ -1,6 +1,8 @@
 import datetime
 from flask import request
 
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import JWTManager
 
 from models import *
 from flask_restx import Resource

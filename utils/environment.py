@@ -2,10 +2,8 @@ import os
 import os.path
 
 from distutils.util import strtobool
-
 if os.path.isfile('utils/env.py'):
     import utils.env
-
 
 class Environment():
 

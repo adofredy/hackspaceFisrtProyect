@@ -1,0 +1,1124 @@
+{
+	"info": {
+		"_postman_id": "a7162ff8-aaf6-45aa-bcda-6b13768b4ba7",
+		"name": "API´S PROYECTO FINAL",
+		"description": "Aplicación de API REST, que permitira hacer un CRUD simple de los usuarios.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "AUTH_Users",
+			"item": [
+				{
+					"name": "login user - obtener jwt",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"password\":\"jose2020\",\n\t\"email\":\"jose@correo.com\"\n\t\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						},
+						"description": "logear usuario\n\n- se debe enviar el correo y password correctos\n- nos devuelve el json para autenticarnos\n- para usar todas las solicitudes debe enviar en el header la clave proporcionada \"token\"."
+					},
+					"response": []
+				}
+			],
+			"description": "Aplicación para validar el login de un usuario\n\n- Valida ingreso en base a correo y password\n- Aplica concepto de JWT",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "02ee5907-ab2e-49b6-8d01-6fdfef41232d",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "e637541a-2798-4b69-98bf-3d3723657b31",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "CRUD_Users",
+			"item": [
+				{
+					"name": "Listar Todos los Usuarios",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/user",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"user"
+							]
+						},
+						"description": "Se listara todos los usuarios registrados en la base de datos\n\n- se debe estar logueado y enviar el token para usar esta peticion."
+					},
+					"response": [
+						{
+							"name": "Listar Todos los Usuarios con sus respectivas datos",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/user",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"user"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "4522"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/0.16.1 Python/3.6.8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 May 2020 15:01:55 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"description\": \"Hola soy ricardo\",\n        \"id\": 1,\n        \"password\": \"ricardo2020\",\n        \"movil\": \"+51987456321\",\n        \"foto\": \"https://fotosbackend.s3.amazonaws.com/person1.jpeg\",\n        \"sede_id\": 1,\n        \"especialidad_id\": 2,\n        \"email\": \"ricardo@correo.com\",\n        \"nombre\": \"ricardo\",\n        \"last_connection\": null,\n        \"estado_id\": 1,\n        \"apellido\": \"gonzales\",\n        \"fechaNacimiento\": \"1990-01-02\"\n    },\n    {\n        \"description\": \"Hola soy paula\",\n        \"id\": 2,\n        \"password\": \"paula2020\",\n        \"movil\": \"+51914523674\",\n        \"foto\": \"https://fotosbackend.s3.amazonaws.com/person2.jpeg\",\n        \"sede_id\": 1,\n        \"especialidad_id\": 2,\n        \"email\": \"paula@correo.com\",\n        \"nombre\": \"paula\",\n        \"last_connection\": null,\n        \"estado_id\": 1,\n        \"apellido\": \"rodriguez\",\n        \"fechaNacimiento\": \"1991-01-01\"\n    },\n    {\n        \"description\": \"Hola soy jorge\",\n        \"id\": 3,\n        \"password\": \"jorge2020\",\n        \"movil\": \"+51932154682\",\n        \"foto\": \"https://fotosbackend.s3.amazonaws.com/person3.jpeg\",\n        \"sede_id\": 2,\n        \"especialidad_id\": 2,\n        \"email\": \"jorge@correo.com\",\n        \"nombre\": \"jorge\",\n        \"last_connection\": null,\n        \"estado_id\": 5,\n        \"apellido\": \"gomez\",\n        \"fechaNacimiento\": \"1992-02-02\"\n    },\n    {\n        \"description\": \"Hola soy jose\",\n        \"id\": 4,\n        \"password\": \"jose2020\",\n        \"movil\": \"+51945672104\",\n        \"foto\": \"https://fotosbackend.s3.amazonaws.com/person4.jpeg\",\n        \"sede_id\": 2,\n        \"especialidad_id\": 1,\n        \"email\": \"jose@correo.com\",\n        \"nombre\": \"jose\",\n        \"last_connection\": null,\n        \"estado_id\": 1,\n        \"apellido\": \"vargaz\",\n        \"fechaNacimiento\": \"1993-03-03\"\n    },\n    {\n        \"description\": \"Hola soy luis\",\n        \"id\": 5,\n        \"password\": \"luis2020\",\n        \"movil\": \"+51999774512\",\n        \"foto\": \"https://fotosbackend.s3.amazonaws.com/person5.jpeg\",\n        \"sede_id\": 3,\n        \"especialidad_id\": 1,\n        \"email\": \"luis@correo.com\",\n        \"nombre\": \"luis\",\n        \"last_connection\": null,\n        \"estado_id\": 1,\n        \"apellido\": \"torres\",\n        \"fechaNacimiento\": \"1994-04-04\"\n    },\n    {\n        \"description\": \"Hola soy maria\",\n        \"id\": 6,\n        \"password\": \"maria2020\",\n        \"movil\": \"+51944521160\",\n        \"foto\": \"https://fotosbackend.s3.amazonaws.com/person6.jpeg\",\n        \"sede_id\": 3,\n        \"especialidad_id\": 2,\n        \"email\": \"maria@correo.com\",\n        \"nombre\": \"maria\",\n        \"last_connection\": null,\n        \"estado_id\": 5,\n        \"apellido\": \"ferrert\",\n        \"fechaNacimiento\": \"1995-05-05\"\n    },\n    {\n        \"description\": \"Hola soy lucas\",\n        \"id\": 7,\n        \"password\": \"lucas2020\",\n        \"movil\": \"+51988451472\",\n        \"foto\": \"https://fotosbackend.s3.amazonaws.com/person7.jpeg\",\n        \"sede_id\": 4,\n        \"especialidad_id\": 2,\n        \"email\": \"lucas@correo.com\",\n        \"nombre\": \"lucas\",\n        \"last_connection\": null,\n        \"estado_id\": 5,\n        \"apellido\": \"torres\",\n        \"fechaNacimiento\": \"1996-06-06\"\n    },\n    {\n        \"description\": \"Hola soy carlos\",\n        \"id\": 8,\n        \"password\": \"carlos2020\",\n        \"movil\": \"+51933445168\",\n        \"foto\": \"https://fotosbackend.s3.amazonaws.com/person8.jpg\",\n        \"sede_id\": 1,\n        \"especialidad_id\": 2,\n        \"email\": \"carlos@correo.com\",\n        \"nombre\": \"carlos\",\n        \"last_connection\": null,\n        \"estado_id\": 1,\n        \"apellido\": \"rodas\",\n        \"fechaNacimiento\": \"1997-07-07\"\n    },\n    {\n        \"description\": \"Hola soy juan miguel\",\n        \"id\": 9,\n        \"password\": \"juan2020\",\n        \"movil\": \"+51966552184\",\n        \"foto\": \"https://fotosbackend.s3.amazonaws.com/person9.jpg\",\n        \"sede_id\": 2,\n        \"especialidad_id\": 3,\n        \"email\": \"juan@correo.com\",\n        \"nombre\": \"juan miguel\",\n        \"last_connection\": null,\n        \"estado_id\": 2,\n        \"apellido\": \"garcia\",\n        \"fechaNacimiento\": \"1998-08-08\"\n    },\n    {\n        \"description\": \"Hola soy alonso\",\n        \"id\": 10,\n        \"password\": \"alonso2020\",\n        \"movil\": \"+51988445512\",\n        \"foto\": \"https://fotosbackend.s3.amazonaws.com/person10.jpg\",\n        \"sede_id\": 3,\n        \"especialidad_id\": 4,\n        \"email\": \"alonso@correo.com\",\n        \"nombre\": \"alonso\",\n        \"last_connection\": null,\n        \"estado_id\": 3,\n        \"apellido\": \"ruiz\",\n        \"fechaNacimiento\": \"1999-09-09\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Listar Un Usuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/user/2",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"2"
+							]
+						},
+						"description": "Listara los datos de un usuario\n\n- debes enviar el id del usuario en el endpoint\n- debes estar logueado y enviar el JWT"
+					},
+					"response": [
+						{
+							"name": "Listar Un Usuario de ID=11",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/user/11",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"11"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "411"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/0.16.1 Python/3.6.8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 May 2020 15:16:11 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"description\": \"Hola soy maicol\",\n    \"id\": 11,\n    \"password\": \"maicol2020\",\n    \"movil\": \"+51933226641\",\n    \"foto\": \"https://fotosbackend.s3.amazonaws.com/person11.jpg\",\n    \"sede_id\": 4,\n    \"especialidad_id\": 1,\n    \"email\": \"maicol@correo.com\",\n    \"nombre\": \"maicol\",\n    \"last_connection\": \"2020-05-08T09:03:37\",\n    \"estado_id\": 4,\n    \"apellido\": \"romero\",\n    \"fechaNacimiento\": \"1995-10-10\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Crear Usuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"nombre\": \"angel\",\r\n    \"apellido\": \"romero cortez\",\r\n    \"password\": \"angel2020\",\r\n    \"email\": \"angel@correo.com\",\r\n    \"movil\": \"+51933227741\",\r\n    \"fechaNacimiento\": \"1995-12-04\",\r\n    \"foto\": \"https://fotosbackend.s3.amazonaws.com/person11.jpg\",\r\n    \"description\": \"Hola soy angel\",\r\n    \"estado_id\": 2,\r\n    \"sede_id\": 2,\r\n    \"especialidad_id\":2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/user",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"user"
+							]
+						},
+						"description": "Nos permite Crear Usuario con un ID asignado automaticamente y los parametros,en esta version requiere el token para ser ejecutada.\n- todos los campos son obligatorios\n- se validara el ingreso correcto del movil (+519XXXXXXXX)\n- el email y movil deben ser unicos"
+					},
+					"response": [
+						{
+							"name": "Error al Crear Usuario - falta un campo",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"nombre\": \"maicol\",\r\n    \"apellido\": \"romero\",\r\n    \"password\": \"maicol2020\",\r\n    \"email\": \"maicol@correo.com\",\r\n    \"movil\": \"+51933226641\",\r\n    \r\n    \"foto\": \"https://fotosbackend.s3.amazonaws.com/person11.jpg\",\r\n    \"description\": \"Hola soy maicol\",\r\n    \"estado_id\": 4,\r\n    \"sede_id\": 4,\r\n    \"especialidad_id\":1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/user",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"user"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "100"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/0.16.1 Python/3.6.8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 May 2020 17:08:06 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"recuerde que todos los campos son obligatorios; falta agregar: 'fechaNacimiento'\"\n}"
+						},
+						{
+							"name": "Crear un Usuario",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"nombre\": \"maicol\",\r\n    \"apellido\": \"romero\",\r\n    \"password\": \"maicol2020\",\r\n    \"email\": \"maicol@correo.com\",\r\n    \"movil\": \"+51933226641\",\r\n    \"fechaNacimiento\": \"1995-10-10\",\r\n    \"foto\": \"https://fotosbackend.s3.amazonaws.com/person11.jpg\",\r\n    \"description\": \"Hola soy maicol\",\r\n    \"estado_id\": 4,\r\n    \"sede_id\": 4,\r\n    \"especialidad_id\":1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/user",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"user"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "411"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/0.16.1 Python/3.6.8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 May 2020 15:14:06 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"description\": \"Hola soy maicol\",\n    \"id\": 11,\n    \"password\": \"maicol2020\",\n    \"movil\": \"+51933226641\",\n    \"foto\": \"https://fotosbackend.s3.amazonaws.com/person11.jpg\",\n    \"sede_id\": 4,\n    \"especialidad_id\": 1,\n    \"email\": \"maicol@correo.com\",\n    \"nombre\": \"maicol\",\n    \"last_connection\": \"2020-05-08T09:03:37\",\n    \"estado_id\": 4,\n    \"apellido\": \"romero\",\n    \"fechaNacimiento\": \"1995-10-10\"\n}"
+						},
+						{
+							"name": "Crear Usuario sin enviar los campos movil y fechaNacimiento",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"nombre\": \"maicos\",\r\n    \"apellido\": \"aaaa\",\r\n    \"password\": \"maicol2020\",\r\n    \"email\": \"maiddsol@correo.com\",\r\n    \"movil\": \"+51977126641\",\r\n    \"fechaNacimiento\": \"1995-12-10\",\r\n    \"foto\": \"\",\r\n    \"description\": \"Hola soy maicol\",\r\n    \"estado_id\": 3,\r\n    \"sede_id\": 1,\r\n    \"especialidad_id\":2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/user",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"user"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "86"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/0.16.1 Python/3.6.8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 May 2020 21:38:07 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"falta ingresar los siguientes campos: ['movil', 'fechaNacimiento']\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Usuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"juan\",\r\n    \"apellido\": \"torres alarcon\",\r\n    \"email\": \"juan@hotmail.com\",\r\n    \"fechaNacimiento\": \"2011-12-29\",\r\n    \"estado_id\": 2,\r\n    \"sede_id\": 2,\r\n    \"especialidad_id\":2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/{{endpoint}}/25",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{endpoint}}",
+								"25"
+							]
+						},
+						"description": "Permite editar los datos registrados de un usuario\n-todos los campos estan validados.\n-si un campo esta mal ingresado no actualizara los datos.\n\nPosibles Errores:\n- {\"error\":\"el usuario no se encuentra en la base de datos\"}\n- {\"error\":\"ingrese el nombre correctamente\"}\n- {\"error\":\"ingrese el apellido correctamente\"}\n- {\"error\":\"ingrese el email correctamente\"}\n- 'ingresar solo numeros del 0 al 9'\n- 'el codigo postal es +51 y el movil debe comenzar con 9'\n- 'tamaño demasiado grande para el movil'\n- errores de fecha\n- {\"error\":\"el estado no se encuentra en la base de datos\"}\n- {\"error\":\"la sede no se encuentra en la base de datos\"}\n- {\"error\":\"la especialidad no se encuentra en la base de datos\"}"
+					},
+					"response": [
+						{
+							"name": "Actualizando un Usuario con ID=11",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\": \"marcial\",\r\n    \"apellido\": \"torres alarcon\",\r\n    \"email\": \"marcial@hotmail.com\",\r\n    \"fechaNacimiento\": \"2011-12-29\",\r\n    \"estado_id\": 5,\r\n    \"sede_id\": 4,\r\n    \"especialidad_id\":2\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/{{endpoint}}/11",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"{{endpoint}}",
+										"11"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "422"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/0.16.1 Python/3.6.8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 May 2020 15:23:53 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"email\": \"marcial@hotmail.com\",\n    \"movil\": \"+51933226641\",\n    \"nombre\": \"marcial\",\n    \"foto\": \"https://fotosbackend.s3.amazonaws.com/person11.jpg\",\n    \"especialidad_id\": 2,\n    \"id\": 11,\n    \"password\": \"maicol2020\",\n    \"sede_id\": 4,\n    \"fechaNacimiento\": \"2011-12-29\",\n    \"apellido\": \"torres alarcon\",\n    \"description\": \"Hola soy maicol\",\n    \"last_connection\": \"2020-05-08T09:03:37\",\n    \"estado_id\": 5\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Usuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/user/25",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"25"
+							]
+						},
+						"description": "Permite eliminar un usuario de la basde de datos.\n- debe enviar el id del usuario que desea eliminar\n- debe estar logeado y tener el JWT\n\nPosibles Errores:\n- {\"error\":\"el usuario no se encuentra en la base de datos\"}"
+					},
+					"response": [
+						{
+							"name": "Eliminacion de Usuario incorrecto",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/user/12",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"12"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "66"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/0.16.1 Python/3.6.8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 May 2020 15:54:48 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"el usuario no se encuentra en la base de datos\"\n}"
+						},
+						{
+							"name": "Eliminacion de Usuario Correctamente",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/user/12",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"12"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "52"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/0.16.1 Python/3.6.8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 May 2020 15:54:03 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": \"usuario eliminado exitosamente\"\n}"
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "API Cambio de Estado",
+			"item": [
+				{
+					"name": "listar usuarios por estado",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"idEstado\":2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/user/state",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"state"
+							]
+						},
+						"description": "Lista de los usuarios con parametro nombre estado , recordando que los estados son:\n- 1 'conectado'\n- 2 'ocupado'\n- 3 'ausente'\n- 4 'no_disponible'\n- 5 'desconectado'"
+					},
+					"response": [
+						{
+							"name": "listar usuarios por estado id=1, conectados",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"idEstado\":1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/user/state",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"state"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "2260"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/0.16.1 Python/3.6.8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 May 2020 16:01:20 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"apellido\": \"gonzales\",\n        \"description\": \"Hola soy ricardo\",\n        \"especialidad_id\": 2,\n        \"id\": 1,\n        \"movil\": \"+51987456321\",\n        \"fechaNacimiento\": \"1990-01-02\",\n        \"sede_id\": 1,\n        \"nombre\": \"ricardo\",\n        \"last_connection\": null,\n        \"foto\": \"https://fotosbackend.s3.amazonaws.com/person1.jpeg\",\n        \"email\": \"ricardo@correo.com\",\n        \"estado_id\": 1,\n        \"password\": \"ricardo2020\"\n    },\n    {\n        \"apellido\": \"rodriguez\",\n        \"description\": \"Hola soy paula\",\n        \"especialidad_id\": 2,\n        \"id\": 2,\n        \"movil\": \"+51914523674\",\n        \"fechaNacimiento\": \"1991-01-01\",\n        \"sede_id\": 1,\n        \"nombre\": \"paula\",\n        \"last_connection\": null,\n        \"foto\": \"https://fotosbackend.s3.amazonaws.com/person2.jpeg\",\n        \"email\": \"paula@correo.com\",\n        \"estado_id\": 1,\n        \"password\": \"paula2020\"\n    },\n    {\n        \"apellido\": \"vargaz\",\n        \"description\": \"Hola soy jose\",\n        \"especialidad_id\": 1,\n        \"id\": 4,\n        \"movil\": \"+51945672104\",\n        \"fechaNacimiento\": \"1993-03-03\",\n        \"sede_id\": 2,\n        \"nombre\": \"jose\",\n        \"last_connection\": null,\n        \"foto\": \"https://fotosbackend.s3.amazonaws.com/person4.jpeg\",\n        \"email\": \"jose@correo.com\",\n        \"estado_id\": 1,\n        \"password\": \"jose2020\"\n    },\n    {\n        \"apellido\": \"torres\",\n        \"description\": \"Hola soy luis\",\n        \"especialidad_id\": 1,\n        \"id\": 5,\n        \"movil\": \"+51999774512\",\n        \"fechaNacimiento\": \"1994-04-04\",\n        \"sede_id\": 3,\n        \"nombre\": \"luis\",\n        \"last_connection\": null,\n        \"foto\": \"https://fotosbackend.s3.amazonaws.com/person5.jpeg\",\n        \"email\": \"luis@correo.com\",\n        \"estado_id\": 1,\n        \"password\": \"luis2020\"\n    },\n    {\n        \"apellido\": \"rodas\",\n        \"description\": \"Hola soy carlos\",\n        \"especialidad_id\": 2,\n        \"id\": 8,\n        \"movil\": \"+51933445168\",\n        \"fechaNacimiento\": \"1997-07-07\",\n        \"sede_id\": 1,\n        \"nombre\": \"carlos\",\n        \"last_connection\": null,\n        \"foto\": \"https://fotosbackend.s3.amazonaws.com/person8.jpg\",\n        \"email\": \"carlos@correo.com\",\n        \"estado_id\": 1,\n        \"password\": \"carlos2020\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Cambiar Estado Usuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"id\":3,\r\n\t\"idEstado\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/user/state",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"state"
+							]
+						},
+						"description": "Permite cambiar el estado de un usuario, este debe estar logueado.\n- el usuario al logearse su estado cambia a \"conectado\"\n- si el usuario esta actualmente con el estado \"conectado\" y decide cambiar a otro estado diferente de \"conectado\" se guardara la fecha y hora en que se cambio de estado.\n- si el usuario se cambia de un estado a otro que no sea \"conectado\", no se guardara la fecha y hora."
+					},
+					"response": [
+						{
+							"name": "cambiar estado usuario de \"conectado\" a otro",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"id\":3,\r\n\t\"idEstado\":2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/user/state",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"state"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "405"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/0.16.1 Python/3.6.8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 May 2020 16:07:57 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"apellido\": \"gomez\",\n    \"description\": \"Hola soy jorge\",\n    \"especialidad_id\": 2,\n    \"id\": 3,\n    \"movil\": \"+51932154682\",\n    \"fechaNacimiento\": \"1992-02-02\",\n    \"sede_id\": 2,\n    \"nombre\": \"jorge\",\n    \"last_connection\": \"2020-05-08T11:07:57\",\n    \"foto\": \"https://fotosbackend.s3.amazonaws.com/person3.jpeg\",\n    \"email\": \"jorge@correo.com\",\n    \"estado_id\": 2,\n    \"password\": \"jorge2020\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Mostrar Informacion de Ultima Conexion Activa",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"idUser\":3\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/user/active/connection",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"active",
+								"connection"
+							]
+						},
+						"description": "Mostrara la fecha y hora de la ultima conexion activa, es decir la ultima conexion cuando el usuario tenia un estado \"conectado\""
+					},
+					"response": [
+						{
+							"name": "mostrar informacion de ultima conexion activa ",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"idUser\":3\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/user/active/connection",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"active",
+										"connection"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "405"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/0.16.1 Python/3.6.8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 May 2020 16:10:10 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"apellido\": \"gomez\",\n    \"description\": \"Hola soy jorge\",\n    \"especialidad_id\": 2,\n    \"id\": 3,\n    \"movil\": \"+51932154682\",\n    \"fechaNacimiento\": \"1992-02-02\",\n    \"sede_id\": 2,\n    \"nombre\": \"jorge\",\n    \"last_connection\": \"2020-05-08T11:07:57\",\n    \"foto\": \"https://fotosbackend.s3.amazonaws.com/person3.jpeg\",\n    \"email\": \"jorge@correo.com\",\n    \"estado_id\": 2,\n    \"password\": \"jorge2020\"\n}"
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "API List All Usuarios",
+			"item": [
+				{
+					"name": "Listar los Usuarios por su Especializacion",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"idEspecialidad\":4\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/user/list/specialization",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"list",
+								"specialization"
+							]
+						},
+						"description": "listara todos los usuarios de una especializacion especifica, por lo que se tiene que enviar un json con el id de la especializacion.\ndonde:\n- 1 back-end\n- 2 front-end\n- 3 diseño-ux\n- 4 desarrollo apps\n- 5 desarrollo de video juegos en unity\n\t\nposibles errore:\n-  {'error':'especialidad enviada no se encuentra en la base de datos'}"
+					},
+					"response": [
+						{
+							"name": "Listar los Usuarios por su Especializacion",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"idEspecialidad\":1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/user/list/specialization",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"list",
+										"specialization"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "895"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/0.16.1 Python/3.6.8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 May 2020 16:15:34 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"apellido\": \"vargaz\",\n        \"description\": \"Hola soy jose\",\n        \"especialidad_id\": 1,\n        \"id\": 4,\n        \"movil\": \"+51945672104\",\n        \"fechaNacimiento\": \"1993-03-03\",\n        \"sede_id\": 2,\n        \"nombre\": \"jose\",\n        \"last_connection\": null,\n        \"foto\": \"https://fotosbackend.s3.amazonaws.com/person4.jpeg\",\n        \"email\": \"jose@correo.com\",\n        \"estado_id\": 1,\n        \"password\": \"jose2020\"\n    },\n    {\n        \"apellido\": \"torres\",\n        \"description\": \"Hola soy luis\",\n        \"especialidad_id\": 1,\n        \"id\": 5,\n        \"movil\": \"+51999774512\",\n        \"fechaNacimiento\": \"1994-04-04\",\n        \"sede_id\": 3,\n        \"nombre\": \"luis\",\n        \"last_connection\": null,\n        \"foto\": \"https://fotosbackend.s3.amazonaws.com/person5.jpeg\",\n        \"email\": \"luis@correo.com\",\n        \"estado_id\": 1,\n        \"password\": \"luis2020\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Ordenar Usuario por Nombre o Apellido",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/user/list/apellido",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"list",
+								"apellido"
+							]
+						},
+						"description": "Listara a todos los usuario en orden alfabetico, ya sea por nombre o por apellido\n\nErrores Posibles:\n- {\"error\":\"la opción ingresada es incorrecta- pruebe con: 'nombre' o 'apellido'\"}"
+					},
+					"response": [
+						{
+							"name": "ordenar usuario por apellido",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/user/list/apellido",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"list",
+										"apellido"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "4539"
+								},
+								{
+									"key": "Server",
+									"value": "Werkzeug/0.16.1 Python/3.6.8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 May 2020 16:20:29 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 6,\n        \"movil\": \"+51944521160\",\n        \"especialidad_id\": 2,\n        \"sede_id\": 3,\n        \"description\": \"Hola soy maria\",\n        \"last_connection\": null,\n        \"fechaNacimiento\": \"1995-05-05\",\n        \"foto\": \"https://fotosbackend.s3.amazonaws.com/person6.jpeg\",\n        \"password\": \"maria2020\",\n        \"email\": \"maria@correo.com\",\n        \"apellido\": \"ferrert\",\n        \"nombre\": \"maria\",\n        \"estado_id\": 5\n    },\n    {\n        \"id\": 9,\n        \"movil\": \"+51966552184\",\n        \"especialidad_id\": 3,\n        \"sede_id\": 2,\n        \"description\": \"Hola soy juan miguel\",\n        \"last_connection\": null,\n        \"fechaNacimiento\": \"1998-08-08\",\n        \"foto\": \"https://fotosbackend.s3.amazonaws.com/person9.jpg\",\n        \"password\": \"juan2020\",\n        \"email\": \"juan@correo.com\",\n        \"apellido\": \"garcia\",\n        \"nombre\": \"juan miguel\",\n        \"estado_id\": 2\n    },\n    {\n        \"id\": 3,\n        \"movil\": \"+51932154682\",\n        \"especialidad_id\": 2,\n        \"sede_id\": 2,\n        \"description\": \"Hola soy jorge\",\n        \"last_connection\": \"2020-05-08T11:07:57\",\n        \"fechaNacimiento\": \"1992-02-02\",\n        \"foto\": \"https://fotosbackend.s3.amazonaws.com/person3.jpeg\",\n        \"password\": \"jorge2020\",\n        \"email\": \"jorge@correo.com\",\n        \"apellido\": \"gomez\",\n        \"nombre\": \"jorge\",\n        \"estado_id\": 2\n    },\n    {\n        \"id\": 1,\n        \"movil\": \"+51987456321\",\n        \"especialidad_id\": 2,\n        \"sede_id\": 1,\n        \"description\": \"Hola soy ricardo\",\n        \"last_connection\": null,\n        \"fechaNacimiento\": \"1990-01-02\",\n        \"foto\": \"https://fotosbackend.s3.amazonaws.com/person1.jpeg\",\n        \"password\": \"ricardo2020\",\n        \"email\": \"ricardo@correo.com\",\n        \"apellido\": \"gonzales\",\n        \"nombre\": \"ricardo\",\n        \"estado_id\": 1\n    },\n    {\n        \"id\": 8,\n        \"movil\": \"+51933445168\",\n        \"especialidad_id\": 2,\n        \"sede_id\": 1,\n        \"description\": \"Hola soy carlos\",\n        \"last_connection\": null,\n        \"fechaNacimiento\": \"1997-07-07\",\n        \"foto\": \"https://fotosbackend.s3.amazonaws.com/person8.jpg\",\n        \"password\": \"carlos2020\",\n        \"email\": \"carlos@correo.com\",\n        \"apellido\": \"rodas\",\n        \"nombre\": \"carlos\",\n        \"estado_id\": 1\n    },\n    {\n        \"id\": 2,\n        \"movil\": \"+51914523674\",\n        \"especialidad_id\": 2,\n        \"sede_id\": 1,\n        \"description\": \"Hola soy paula\",\n        \"last_connection\": null,\n        \"fechaNacimiento\": \"1991-01-01\",\n        \"foto\": \"https://fotosbackend.s3.amazonaws.com/person2.jpeg\",\n        \"password\": \"paula2020\",\n        \"email\": \"paula@correo.com\",\n        \"apellido\": \"rodriguez\",\n        \"nombre\": \"paula\",\n        \"estado_id\": 1\n    },\n    {\n        \"id\": 10,\n        \"movil\": \"+51988445512\",\n        \"especialidad_id\": 4,\n        \"sede_id\": 3,\n        \"description\": \"Hola soy alonso\",\n        \"last_connection\": null,\n        \"fechaNacimiento\": \"1999-09-09\",\n        \"foto\": \"https://fotosbackend.s3.amazonaws.com/person10.jpg\",\n        \"password\": \"alonso2020\",\n        \"email\": \"alonso@correo.com\",\n        \"apellido\": \"ruiz\",\n        \"nombre\": \"alonso\",\n        \"estado_id\": 3\n    },\n    {\n        \"id\": 5,\n        \"movil\": \"+51999774512\",\n        \"especialidad_id\": 1,\n        \"sede_id\": 3,\n        \"description\": \"Hola soy luis\",\n        \"last_connection\": null,\n        \"fechaNacimiento\": \"1994-04-04\",\n        \"foto\": \"https://fotosbackend.s3.amazonaws.com/person5.jpeg\",\n        \"password\": \"luis2020\",\n        \"email\": \"luis@correo.com\",\n        \"apellido\": \"torres\",\n        \"nombre\": \"luis\",\n        \"estado_id\": 1\n    },\n    {\n        \"id\": 7,\n        \"movil\": \"+51988451472\",\n        \"especialidad_id\": 2,\n        \"sede_id\": 4,\n        \"description\": \"Hola soy lucas\",\n        \"last_connection\": null,\n        \"fechaNacimiento\": \"1996-06-06\",\n        \"foto\": \"https://fotosbackend.s3.amazonaws.com/person7.jpeg\",\n        \"password\": \"lucas2020\",\n        \"email\": \"lucas@correo.com\",\n        \"apellido\": \"torres\",\n        \"nombre\": \"lucas\",\n        \"estado_id\": 5\n    },\n    {\n        \"id\": 4,\n        \"movil\": \"+51945672104\",\n        \"especialidad_id\": 1,\n        \"sede_id\": 2,\n        \"description\": \"Hola soy jose\",\n        \"last_connection\": null,\n        \"fechaNacimiento\": \"1993-03-03\",\n        \"foto\": \"https://fotosbackend.s3.amazonaws.com/person4.jpeg\",\n        \"password\": \"jose2020\",\n        \"email\": \"jose@correo.com\",\n        \"apellido\": \"vargaz\",\n        \"nombre\": \"jose\",\n        \"estado_id\": 1\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "buscar usuario por una parte de su nombre",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/user/search/as",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"search",
+								"as"
+							]
+						},
+						"description": "para buscar un usuario por parte de su nombre debes usar el endpoint:\nEj: localhost:8000/api/user/search/XXXXX\ndonde dice XXXXX lo puedes cambiar por cualquier letra que este contenida en un nombre de usuario"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

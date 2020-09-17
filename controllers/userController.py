@@ -1,6 +1,8 @@
 from flask import request
 from flask_jwt_extended import jwt_required
 
+from controllers.validaciones import *
+
 from flask import request
 
 #modulos del sistema
