@@ -3,7 +3,7 @@ from server import *
 from models import *
 
 from controllers.userController import UserController,UserPostController, UserOrderNameOrLastNameController,UserListSpecializationController, UserSearchController, UserStateController, UserLastConnectionController
-from controllers.userController import UserController,UserPostController,UserPostController
+from controllers.userController import UserController,UserPostController
 from controllers.loginController import LoginController
 
 user = api.namespace('api',description='User Api')

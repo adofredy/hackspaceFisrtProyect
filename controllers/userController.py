@@ -2,26 +2,25 @@ from flask import request
 from flask_jwt_extended import jwt_required
 
 from controllers.validaciones import *
-
 from flask import request
-
 #modulos del sistema
 from models import *
-
 from flask_restx import Resource
+
 import datetime
 
 class UserController(Resource):
     # BUSCAR un usuario por su id
+    @jwt_required
     def get(self,id):
         user = User.query.get_or_404(id)
         return userSchema.dump(user)
     
     # ACTUALIZAR un usuario por su id validando los campos ingresados
+    @jwt_required
     def put(self, id):
 
         data = request.get_json()
-        
         if validarIdUser(id):
             user = User.query.filter_by(id=id).first()
             if "nombre" in data:
@@ -87,7 +86,8 @@ class UserController(Resource):
         else:
             return {"error":f"el usuario con id {id}, no se encuentra en la base de datos"}
         
-    # eliminar un usuario por su id         
+    # eliminar un usuario por su id 
+    @jwt_required        
     def delete(self,id):
         if validarIdUser(id):
             user = User.query.filter_by(id=id).first()
@@ -98,11 +98,14 @@ class UserController(Resource):
             return {"error:"f"el usuario con id {id}, no se encuentra en la base de datos"}
 
 class UserPostController(Resource):
-    
+    #Listar todos los usuarios
+    @jwt_required
     def get(self):
         users = User.query.all()
-        return userSchema.dump(users)
-
+        return usersSchema.dump(users)
+    
+    #validar un usuario validando el ingreso del movil ejm:+519xxxx
+    @jwt_required
     def post(self):
         data = request.get_json()
         camposColumnas = ["nombre","apellido","password","email","movil","fechaNacimiento","foto","description","estado_id","sede_id","especialidad_id"]
@@ -113,48 +116,48 @@ class UserPostController(Resource):
                 camposIguales.append(campo)
             else:
                 camposFaltantes.append(campo)
-                fotoDefault =""
-                if len(camposColumnas) == len(camposIguales):
-                    if validarCaracteresAlfabeticos(data["nombre"]):
-                        nombre = data["nombre"]
-                else:
-                    return {"error":"ingrese el nombre correctamente"}
+        print(camposIguales)
+        print(camposFaltantes)
+        fotoDefault ="https://fotosbackend.s3.amazonaws.com/person0.png"
+        if len(camposColumnas) == len(camposIguales):
+            if validarCaracteresAlfabeticos(data["nombre"]):
+                nombre = data["nombre"]
+            else:
+                return {"error":"ingrese el nombre correctamente"}
 
-                if validarCaracteresAlfabeticos(data["apellido"]):
-                    apellido = data["apellido"]
-                else:
-                    return {"error":"ingrese el apellido correctamente"}
+            if validarCaracteresAlfabeticos(data["apellido"]):
+                apellido = data["apellido"]
+            else:
+                return {"error":"ingrese el apellido correctamente"}
 
-                if validarCorreo(data["email"]):
-                    email = data["email"]
-                else:
-                    return {"error":"ingrese el email correctamente"}
+            if validarCorreo(data["email"]):
+                email = data["email"]
+            else:
+                return {"error":"ingrese el email correctamente"}
                 
-                if validarMovil(data["movil"]).get("valor"):
-                    movil = data["movil"]
-                else:
-                    mensaje=validarMovil(data["movil"]).get("mensaje")
-                    return {"error":""+mensaje}
+            if validarMovil(data["movil"]).get("valor"):
+                movil = data["movil"]
+            else:
+                mensaje=validarMovil(data["movil"]).get("mensaje")
+                return {"error":""+mensaje}
 
-                try:
-                    date_time_obj = datetime.datetime.strptime(data['fechaNacimiento'], '%Y-%m-%d')
-                except Exception as ex:
-                    return {"error":str(ex)}
+            try:
+                date_time_obj = datetime.datetime.strptime(data['fechaNacimiento'], '%Y-%m-%d')
+            except Exception as ex:
+                return {"error":str(ex)}
                 
-                if validarIdEstado(data['estado_id']):
-                    estado_id= data['estado_id']
-                else:
-                    return {"error":"el estado no se encuentra en la base de datos"}
-
-                if validarIdSede(data['sede_id']):
+            if validarIdEstado(data['estado_id']):
+                estado_id= data['estado_id']
+            else:
+                return {"error":"el estado no se encuentra en la base de datos"}
+            if validarIdSede(data['sede_id']):
                     sede_id = data['sede_id']
-                else:
-                    return {"error":"la sede no se encuentra en la base de datos"}
-
-                if validarIdEspecialidad(data['especialidad_id']):
-                    especialidad_id = data['especialidad_id']
-                else:
-                    return {"error":"la especialidad no se encuentra en la base de datos"}
+            else:
+                return {"error":"la sede no se encuentra en la base de datos"}
+            if validarIdEspecialidad(data['especialidad_id']):
+                especialidad_id = data['especialidad_id']
+            else:
+                return {"error":"la especialidad no se encuentra en la base de datos"}
             
             new_user = User(
 
@@ -169,8 +172,7 @@ class UserPostController(Resource):
                     estado_id = estado_id,
                     sede_id = sede_id,
                     especialidad_id = especialidad_id
-
-                    )
+                        )
             db.session.add(new_user)
             db.session.commit()
             return {"success":"usuario creado con exito","user":str(userSchema.dump(new_user))}
@@ -179,7 +181,7 @@ class UserPostController(Resource):
 
 class UserOrderNameOrLastNameController(Resource):
   # LISTAR todos los usuarios por orden de apellido o nombre
-    
+    @jwt_required
     def get(self, nameOrLastName):
         if nameOrLastName == 'apellido' or nameOrLastName == 'nombre':
             users=''
@@ -194,7 +196,7 @@ class UserOrderNameOrLastNameController(Resource):
 
 class UserListSpecializationController(Resource):
   # LISTAR todos los usuarios por su especialidad
-    
+    @jwt_required
     def get(self):
         data = request.get_json()
         idEspecializacion=data["idEspecialidad"]
@@ -206,7 +208,7 @@ class UserListSpecializationController(Resource):
 
 class UserSearchController(Resource):
   # BUSCAR todos los usuarios ingresando algunas letras de su nombre
-  
+    @jwt_required
     def get(self, nombre):
         if validarCaracteresAlfabeticos(nombre):
             search =f'%{nombre}%'
@@ -219,7 +221,7 @@ class UserSearchController(Resource):
             return {'error':'la cadena debe contener solo letras'},400
 class UserStateController(Resource):
   # LISTAR todos los usuarios por su estado
-
+    @jwt_required
     def get(self):
         data = request.get_json()
         idEstado=data["idEstado"]
@@ -232,7 +234,8 @@ class UserStateController(Resource):
             return usersSchema.dump(users)
         else:
             return {'error':'estado enviado no se encuentra en la base de datos'},400        
-
+    
+    @jwt_required
     def put(self):
         data = request.get_json()
 
@@ -254,7 +257,7 @@ class UserStateController(Resource):
 
 class UserLastConnectionController(Resource):
   # MOSTRAR la ultima conexion activa
-  
+    @jwt_required
     def get(self):
         
         data = request.get_json()

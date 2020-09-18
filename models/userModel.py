@@ -61,7 +61,7 @@ class EstadoSchema(ma.Schema):
     class Meta:
         fields = ("id","nombreEstado")
 
-estadoSchema = EstadoSchema()
+estadoSchema =  EstadoSchema()
 estadosSchema = EstadoSchema(many=True)
 
 class EspecialidadSchema(ma.Schema):

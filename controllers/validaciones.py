@@ -33,7 +33,7 @@ def validarIdEspecialidad(idEspecialidad):
     especialidad = Especialidad.query.with_entities(Especialidad)
     lista=especialidadesSchema.dump(especialidad)
     ids=[]
-    for dicccionario in lista:
+    for diccionario in lista:
         for key, value in diccionario.items():
             ids.append(value)
     if idEspecialidad in ids:
@@ -44,7 +44,7 @@ def validarIdEspecialidad(idEspecialidad):
 def validarMovil(movil):
     if len(movil) == 12:
         if movil[:4]=="+519":
-            if movil[:4].isnumeric():
+            if movil[4:].isnumeric():
                 return {"valor":True,"mensaje":"movil correcto"}
             else:
                 return {"valor":False,'mensaje':'ingresar solo numeros del 0 al 9'}
