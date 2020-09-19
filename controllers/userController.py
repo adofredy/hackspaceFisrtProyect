@@ -118,7 +118,7 @@ class UserPostController(Resource):
                 camposFaltantes.append(campo)
         print(camposIguales)
         print(camposFaltantes)
-        fotoDefault ="https://fotosbackend.s3.amazonaws.com/person0.png"
+        fotoDefault ="https://hackspaceimg.s3.amazonaws.com/person0.jpg"
         if len(camposColumnas) == len(camposIguales):
             if validarCaracteresAlfabeticos(data["nombre"]):
                 nombre = data["nombre"]
